@@ -24,7 +24,7 @@ if (sessionNum) {
           localStorage.getItem("PMDBlastName") ||
           sessionStorage.getItem("PMDBlastName");
         location.replace(
-          `http://personalmoviedatabase.fly.dev/profile/?username=${signedInUsername}&id=${signedInUserId}&name=${signedInfirstname}&lname=${signedInlastname}`
+          `https://personalmoviedatabase.fly.dev/profile/?username=${signedInUsername}&id=${signedInUserId}&name=${signedInfirstname}&lname=${signedInlastname}`
         );
       }
     })
