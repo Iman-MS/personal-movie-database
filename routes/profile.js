@@ -45,7 +45,7 @@ const addFriend = async (req, res) => {
 
   try {
     const resp = await axios.get(
-      `http://localhost:3000/isSignedin/?Id=${userId}&sesId=${sessionNum}`
+      `http://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
     );
     if (resp.data.signedIn == "true") {
       db.transaction((trx) => {

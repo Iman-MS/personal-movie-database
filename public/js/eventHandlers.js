@@ -18,7 +18,7 @@ const onAdd = async (Movie) => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:3000/addmovieorseries",
+        "http://personalmoviedatabase.fly.dev/addmovieorseries",
         movieInfo
       );
       console.log(response);
@@ -63,13 +63,15 @@ const onSearchOtherUsers = async (event) => {
   if (searchTerm) {
     if (!localStorage.getItem("PMDBfriendsList")) {
       const response = await axios.get(
-        `http://localhost:3000/userFriends/?Id=${signedInUserId || userId}`
+        `http://personalmoviedatabase.fly.dev/userFriends/?Id=${
+          signedInUserId || userId
+        }`
       );
       const friendsList = response.data;
       localStorage.setItem("PMDBfriendsList", JSON.stringify(friendsList));
     }
     const response = await axios.get(
-      `http://localhost:3000/usersearchResults/?searchTerm=${searchTerm}`
+      `http://personalmoviedatabase.fly.dev/usersearchResults/?searchTerm=${searchTerm}`
     );
     searchResultContainer.classList.add("userSearch-result-container-visible");
     const userSearchResultList = document.getElementById(
@@ -141,7 +143,7 @@ const onSave = async (movieObj, event) => {
   if (movieObj.listName == "moviesList") {
     try {
       const response = await axios.post(
-        "http://localhost:3000/addmovieorseries",
+        "http://personalmoviedatabase.fly.dev/addmovieorseries",
         movieInfo
       );
       console.log(response);
@@ -156,7 +158,7 @@ const onSave = async (movieObj, event) => {
   } else if (movieObj.listName == "seriesList") {
     try {
       const response = await axios.post(
-        "http://localhost:3000/addmovieorseries",
+        "http://personalmoviedatabase.fly.dev/addmovieorseries",
         movieInfo
       );
       console.log(response);
@@ -184,7 +186,7 @@ const onDelete = async (movieID, event) => {
     const containerList =
       event.target.parentElement.parentElement.parentElement.id;
     const response = await axios.delete(
-      `http://localhost:3000/removeWatchedMovieOrSeries/?movieId=${movieID}&userId=${userId.toString()}&sessionNum=${sessionNum}&containerList=${containerList}`
+      `http://personalmoviedatabase.fly.dev/removeWatchedMovieOrSeries/?movieId=${movieID}&userId=${userId.toString()}&sessionNum=${sessionNum}&containerList=${containerList}`
     );
 
     console.log(response);
@@ -273,7 +275,7 @@ const onEdit = async (movieID, event) => {
         userComment: event.target[1].value,
       };
       const response = await axios.put(
-        "http://localhost:3000/editWatchedMovieOrSeries",
+        "http://personalmoviedatabase.fly.dev/editWatchedMovieOrSeries",
         body
       );
       console.log(response);
@@ -302,7 +304,10 @@ const onSignin = async (event) => {
   const formContainer = event.target.parentElement;
   renderLoadingAnim(formContainer);
   try {
-    const response = await axios.post("http://localhost:3000/signin", body);
+    const response = await axios.post(
+      "http://personalmoviedatabase.fly.dev/signin",
+      body
+    );
     removeLoadingAnim(formContainer);
     // console.log(response.data);
     if (rememberMe == "on") {
@@ -319,7 +324,7 @@ const onSignin = async (event) => {
       sessionStorage.setItem("PMDBlastName", response.data.lastname);
     }
     location.replace(
-      `http://localhost:3000/profile/?username=${
+      `http://personalmoviedatabase.fly.dev/profile/?username=${
         response.data.username
       }&id=${response.data.userid.toString()}&name=${
         response.data.firstname
@@ -344,7 +349,10 @@ const onSignUp = async (event) => {
     password: event.target[4].value,
   };
   try {
-    const response = await axios.post("http://localhost:3000/signup", body);
+    const response = await axios.post(
+      "http://personalmoviedatabase.fly.dev/signup",
+      body
+    );
     removeLoadingAnim(formContainer);
     console.log(response.data);
     sessionStorage.setItem("PMDBsessionNum", response.data.sessionNum);
@@ -353,7 +361,7 @@ const onSignUp = async (event) => {
     sessionStorage.setItem("PMDBfirstName", body.firstname);
     sessionStorage.setItem("PMDBlastName", body.lastname);
     location.replace(
-      `http://localhost:3000/profile/?username=${
+      `http://personalmoviedatabase.fly.dev/profile/?username=${
         body.username
       }&id=${response.data.userid.toString()}&name=${body.firstname}&lname=${
         body.lastname
@@ -369,7 +377,7 @@ const onSignUp = async (event) => {
 const onLogout = () => {
   localStorage.clear();
   sessionStorage.clear();
-  location.replace(`http://localhost:3000/`);
+  location.replace(`http://personalmoviedatabase.fly.dev/`);
 };
 
 const onScroll = () => {
@@ -394,7 +402,7 @@ const loadProfilePage = () => {
     localStorage.getItem("PMDBuserName") ||
     sessionStorage.getItem("PMDBuserName");
   location.replace(
-    `http://localhost:3000/profile/?username=${username}&id=${userid.toString()}&name=${name}&lname=${lastName}`
+    `http://personalmoviedatabase.fly.dev/profile/?username=${username}&id=${userid.toString()}&name=${name}&lname=${lastName}`
   );
 };
 
@@ -416,7 +424,7 @@ const getFriendsList = async () => {
         localStorage.getItem("PMDBuserid") ||
         sessionStorage.getItem("PMDBuserid");
       const response = await axios.get(
-        `http://localhost:3000/userFriends/?Id=${userId}`
+        `http://personalmoviedatabase.fly.dev/userFriends/?Id=${userId}`
       );
       const friendsList = response.data;
       localStorage.setItem("PMDBfriendsList", JSON.stringify(friendsList));
@@ -436,7 +444,9 @@ const getPeopleYouMighKnowList = async () => {
   if (peopleYMNlistEl.childNodes.length == 0) {
     if (!localStorage.getItem("PMDBfriendsList") && signedInUserId) {
       const response = await axios.get(
-        `http://localhost:3000/userFriends/?Id=${signedInUserId || userId}`
+        `http://personalmoviedatabase.fly.dev/userFriends/?Id=${
+          signedInUserId || userId
+        }`
       );
       const friendsList = response.data;
       localStorage.setItem("PMDBfriendsList", JSON.stringify(friendsList));
@@ -444,7 +454,7 @@ const getPeopleYouMighKnowList = async () => {
     try {
       const searchTerm = "";
       const response = await axios.get(
-        `http://localhost:3000/usersearchResults/?searchTerm=${searchTerm}`
+        `http://personalmoviedatabase.fly.dev/usersearchResults/?searchTerm=${searchTerm}`
       );
       const friendsArray =
         JSON.parse(localStorage.getItem("PMDBfriendsList")) || [];
@@ -478,7 +488,7 @@ const addToFriendsHandler = async (friendInfo, event) => {
     sessionNum: sessionNum || "does not exist",
   };
   try {
-    await axios.post("http://localhost:3000/addFriend", body);
+    await axios.post("http://personalmoviedatabase.fly.dev/addFriend", body);
     event.target.parentElement.remove();
     showSystemMsg("Friend Added");
     if (localStorage.getItem("PMDBfriendsList")) {
@@ -487,7 +497,7 @@ const addToFriendsHandler = async (friendInfo, event) => {
       localStorage.setItem("PMDBfriendsList", JSON.stringify(friendsList));
     } else {
       const response = await axios.get(
-        `http://localhost:3000/userFriends/?Id=${userId}`
+        `http://personalmoviedatabase.fly.dev/userFriends/?Id=${userId}`
       );
       const friendsList = response.data;
       friendsList.push(friendInfo);
