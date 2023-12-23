@@ -75,7 +75,7 @@ const removeLoadingAnim = (containerEl) => {
 const isSignedin = async (userId, sessionNum = "0") => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/isSignedin/?Id=${userId}&sesId=${sessionNum}`
+      `http://localhost:3000/isSignedin/?Id=${userId}&sesId=${sessionNum}`
     );
 
     if (response.data.signedIn == "true") {

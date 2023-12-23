@@ -295,7 +295,7 @@ const createFriendItem = (friendInfo) => {
 
   container.addEventListener("click", () => {
     location.replace(
-      `http://localhost:8080/profile/?username=${friendInfo.username}&id=${friendInfo.userid}&name=${friendInfo.firstname}&lname=${friendInfo.lastname}`
+      `http://localhost:3000/profile/?username=${friendInfo.username}&id=${friendInfo.userid}&name=${friendInfo.firstname}&lname=${friendInfo.lastname}`
     );
   });
 
@@ -313,7 +313,7 @@ const createUserSearchResultItem = (userInfo, isFriend = false) => {
   avatar.style.cssText = "border-radius: 35%; height: 2rem; width: 2rem;";
   avatar.addEventListener("click", () => {
     location.replace(
-      `http://localhost:8080/profile/?username=${userInfo.username}&id=${userInfo.userid}&name=${userInfo.firstname}&lname=${userInfo.lastname}`
+      `http://localhost:3000/profile/?username=${userInfo.username}&id=${userInfo.userid}&name=${userInfo.firstname}&lname=${userInfo.lastname}`
     );
   });
   container.append(avatar);
@@ -323,7 +323,7 @@ const createUserSearchResultItem = (userInfo, isFriend = false) => {
   name.innerText = `${userInfo.firstname} ${userInfo.lastname}`;
   name.addEventListener("click", () => {
     location.replace(
-      `http://localhost:8080/profile/?username=${userInfo.username}&id=${userInfo.userid}&name=${userInfo.firstname}&lname=${userInfo.lastname}`
+      `http://localhost:3000/profile/?username=${userInfo.username}&id=${userInfo.userid}&name=${userInfo.firstname}&lname=${userInfo.lastname}`
     );
   });
   container.append(name);
@@ -391,7 +391,7 @@ const updatePeopleYMNlist = (userEl) => {
 
 const renderMovieList = async (userId) => {
   const response = await axios.get(
-    `http://localhost:8080/watchedMovies/?Id=${userId}`
+    `http://localhost:3000/watchedMovies/?Id=${userId}`
   );
   // console.log(response);
   noOfMoviesWatched = response.data.length;
@@ -420,7 +420,7 @@ const renderMovieList = async (userId) => {
 
 const renderthingsToWatchList = async (userId) => {
   const response = await axios.get(
-    `http://localhost:8080/thingsToWatch/?Id=${userId}`
+    `http://localhost:3000/thingsToWatch/?Id=${userId}`
   );
   // console.log(response);
   if (response.data.length > 0) {
@@ -442,7 +442,7 @@ const renderthingsToWatchList = async (userId) => {
 
 const renderSeriesList = async (userId) => {
   const response = await axios.get(
-    `http://localhost:8080/watchedSeries/?Id=${userId}`
+    `http://localhost:3000/watchedSeries/?Id=${userId}`
   );
   // console.log(response);
   noOfSeriesWatched = response.data.length;
@@ -534,7 +534,7 @@ const renderSidemenuItems = (isUserSignedin) => {
     yourProfile.className = "side-menu-item mb-3";
     yourProfile.innerText = "Your Profile";
     yourProfile.addEventListener("click", () => {
-      location.replace(`http://localhost:8080/`);
+      location.replace(`http://localhost:3000/`);
     });
 
     const SignIn = document.createElement("div");
@@ -542,7 +542,7 @@ const renderSidemenuItems = (isUserSignedin) => {
     SignIn.id = "SignIn";
     SignIn.innerText = "Sign in";
     SignIn.addEventListener("click", () => {
-      location.replace(`http://localhost:8080/`);
+      location.replace(`http://localhost:3000/`);
     });
 
     const signUp = document.createElement("div");
@@ -550,7 +550,7 @@ const renderSidemenuItems = (isUserSignedin) => {
     signUp.className = "side-menu-item mb-3";
     signUp.innerText = "Sign up";
     signUp.addEventListener("click", () => {
-      location.replace(`http://localhost:8080/register`);
+      location.replace(`http://localhost:3000/register`);
     });
 
     sidemenuItemsContainer.prepend(yourProfile, SignIn, signUp);
@@ -560,7 +560,7 @@ const renderSidemenuItems = (isUserSignedin) => {
 const renderAddtoFriendsBtn = async () => {
   if (!localStorage.getItem("PMDBfriendsList")) {
     const response = await axios.get(
-      `http://localhost:8080/userFriends/?Id=${signedInUserId}`
+      `http://localhost:3000/userFriends/?Id=${signedInUserId}`
     );
     const friendsList = response.data;
     localStorage.setItem("PMDBfriendsList", JSON.stringify(friendsList));
@@ -681,10 +681,10 @@ if (sessionNum) {
       }
     } else {
       userProfileNavbar.addEventListener("click", () => {
-        location.replace(`http://localhost:8080/`);
+        location.replace(`http://localhost:3000/`);
       });
       logoutBtnNavbar.addEventListener("click", () => {
-        location.replace(`http://localhost:8080/register`);
+        location.replace(`http://localhost:3000/register`);
       });
     }
   });
@@ -699,10 +699,10 @@ if (sessionNum) {
   const logoutBtnNavbar = document.getElementById("logoutBtn");
 
   userProfileNavbar.addEventListener("click", () => {
-    location.replace(`http://localhost:8080/`);
+    location.replace(`http://localhost:3000/`);
   });
   logoutBtnNavbar.addEventListener("click", () => {
-    location.replace(`http://localhost:8080/register`);
+    location.replace(`http://localhost:3000/register`);
   });
 }
 
