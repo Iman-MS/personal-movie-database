@@ -11,9 +11,9 @@ pageContainer.addEventListener("scroll", onScroll);
 //this part is for understanding which list to add the movie or serie to when we click on add
 let listName = "";
 $("#exampleModal").on("show.bs.modal", function (event) {
-	var button = $(event.relatedTarget); // Button that triggered the modal
-	listName = button.data("list"); // Extract info from data-* attributes
-	console.log(listName);
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  listName = button.data("list"); // Extract info from data-* attributes
+  console.log(listName);
 });
 /////////////
 
@@ -22,74 +22,74 @@ let noOfMoviesWatched = 0;
 let noOfSeriesWatched = 0;
 
 const fetchMovies = async (searchTitle) => {
-	const modifiedSearchTitle = searchTitle.split(" ").join("?");
-	try {
-		const response = await axios.get("https://www.omdbapi.com/", {
-			params: { apikey: "3b3cd644", s: modifiedSearchTitle },
-		});
-		return response.data;
-	} catch (error) {
-		alert(error.message);
-	}
+  const modifiedSearchTitle = searchTitle.split(" ").join("?");
+  try {
+    const response = await axios.get("https://www.omdbapi.com/", {
+      params: { apikey: "3b3cd644", s: modifiedSearchTitle },
+    });
+    return response.data;
+  } catch (error) {
+    alert(error.message);
+  }
 };
 
 const fetchMovieDetail = async (movieId) => {
-	try {
-		const response = await axios.get("https://www.omdbapi.com/", {
-			params: { apikey: "3b3cd644", i: movieId },
-		});
-		return response.data;
-	} catch (error) {
-		alert(error.message);
-	}
+  try {
+    const response = await axios.get("https://www.omdbapi.com/", {
+      params: { apikey: "3b3cd644", i: movieId },
+    });
+    return response.data;
+  } catch (error) {
+    alert(error.message);
+  }
 };
 
 const createSearchedMoviesList = (moviesObj) => {
-	const moviesListContainer = document.getElementById("MoviesList");
-	moviesListContainer.innerHTML = "";
-	moviesObj.Search.forEach((element) => {
-		const row = document.createElement("div");
-		row.className = "row py-2 mt-2 border border-info rounded";
-		const col = document.createElement("div");
-		col.className =
-			"col py-1 d-flex align-items-center d-flex justify-content-between";
-		const imgContainer = document.createElement("div");
-		imgContainer.className = "d-inline-block pr-4";
-		const img = document.createElement("img");
-		img.className = "rounded";
-		img.src = element.Poster;
-		img.style = "height: 8rem; width: 6rem;";
-		imgContainer.append(img);
-		col.append(imgContainer);
+  const moviesListContainer = document.getElementById("MoviesList");
+  moviesListContainer.innerHTML = "";
+  moviesObj.Search.forEach((element) => {
+    const row = document.createElement("div");
+    row.className = "row py-2 mt-2 border border-info rounded";
+    const col = document.createElement("div");
+    col.className =
+      "col py-1 d-flex align-items-center d-flex justify-content-between";
+    const imgContainer = document.createElement("div");
+    imgContainer.className = "d-inline-block pr-4";
+    const img = document.createElement("img");
+    img.className = "rounded";
+    img.src = element.Poster;
+    img.style = "height: 8rem; width: 6rem;";
+    imgContainer.append(img);
+    col.append(imgContainer);
 
-		const movieDesc = document.createElement("div");
-		movieDesc.className = "d-flex flex-column align-items-center w-50 mr-1";
+    const movieDesc = document.createElement("div");
+    movieDesc.className = "d-flex flex-column align-items-center w-50 mr-1";
 
-		const movieTitle = document.createElement("div");
-		movieTitle.className = "pb-2 text-center";
-		movieTitle.innerHTML = `Title : <span class="font-weight-bold">${element.Title}</span>`;
-		movieDesc.append(movieTitle);
+    const movieTitle = document.createElement("div");
+    movieTitle.className = "pb-2 text-center";
+    movieTitle.innerHTML = `Title : <span class="font-weight-bold">${element.Title}</span>`;
+    movieDesc.append(movieTitle);
 
-		const movieYear = document.createElement("div");
-		movieYear.className = "pb-2";
-		movieYear.innerHTML = `Year : <span class="font-weight-bold">${element.Year}</span>`;
-		movieDesc.append(movieYear);
+    const movieYear = document.createElement("div");
+    movieYear.className = "pb-2";
+    movieYear.innerHTML = `Year : <span class="font-weight-bold">${element.Year}</span>`;
+    movieDesc.append(movieYear);
 
-		const addBtn = document.createElement("button");
-		addBtn.className = "btn btn-info";
-		addBtn.textContent = "Add";
-		addBtn.addEventListener("click", onAdd.bind(this, element));
-		movieDesc.append(addBtn);
+    const addBtn = document.createElement("button");
+    addBtn.className = "btn btn-info";
+    addBtn.textContent = "Add";
+    addBtn.addEventListener("click", onAdd.bind(this, element));
+    movieDesc.append(addBtn);
 
-		col.append(movieDesc);
-		row.append(col);
-		moviesListContainer.append(row);
-	});
+    col.append(movieDesc);
+    row.append(col);
+    moviesListContainer.append(row);
+  });
 };
 
 const addNewMovieComponent = (movieObj) => {
-	const moviesListContainer = document.getElementById("MoviesList");
-	moviesListContainer.innerHTML = `<div class="container border p-4 mt-4 rounded">
+  const moviesListContainer = document.getElementById("MoviesList");
+  moviesListContainer.innerHTML = `<div class="container border p-4 mt-4 rounded">
 	<div class="row pb-3 align-items-center"> <img
 			src="${movieObj.Poster}"
 			class="rounded mx-auto d-block" alt="..." style="width: 40%;">
@@ -117,18 +117,18 @@ const addNewMovieComponent = (movieObj) => {
 	</div>
 	</form>
 </div>`;
-	movieObj.userId = userId;
-	movieObj.listName = listName;
-	const form = document.getElementById("newMovieForm");
-	form.addEventListener("submit", onSave.bind(this, movieObj));
-	// savebtn.addEventListener('click', onSave);
+  movieObj.userId = userId;
+  movieObj.listName = listName;
+  const form = document.getElementById("newMovieForm");
+  form.addEventListener("submit", onSave.bind(this, movieObj));
+  // savebtn.addEventListener('click', onSave);
 };
 
 const createMovieCard = (movieInfo) => {
-	const movieCard = document.createElement("div");
-	movieCard.className =
-		"card px-3 pt-3 my-2 row flex-row no-gutters justify-content-center";
-	movieCard.innerHTML = ` <div class="col-4 px-2">
+  const movieCard = document.createElement("div");
+  movieCard.className =
+    "card px-3 pt-3 my-2 row flex-row no-gutters justify-content-center";
+  movieCard.innerHTML = ` <div class="col-4 px-2">
 	<img src="${movieInfo.movie.Poster}"
 		class="rounded mx-auto d-block" alt="..." style="width: 100%;">
 </div>
@@ -145,56 +145,64 @@ const createMovieCard = (movieInfo) => {
 <div class="col-12 pt-3 pb-3 text-center dropdown--item dropdown--item-hide" id="${movieInfo.movie.imdbID}-2"> 
 </div>`;
 
-	const signedInUserId =
-		localStorage.getItem("PMDBuserid") || sessionStorage.getItem("PMDBuserid");
-	if (isSignedIn && userId == signedInUserId) {
-		const editBtn = document.createElement("button");
-		editBtn.className = "btn btn-primary mr-1";
-		editBtn.innerText = "Edit";
-		editBtn.setAttribute("data-toggle", "modal");
-		editBtn.setAttribute("data-target", "#editMovieModal");
-		editBtn.setAttribute("data-list", movieInfo.listName);
-		editBtn.addEventListener("click", onEdit.bind(this, movieInfo.movie.imdbID));
-		movieCard.lastElementChild.append(editBtn);
+  const signedInUserId =
+    localStorage.getItem("PMDBuserid") || sessionStorage.getItem("PMDBuserid");
+  if (isSignedIn && userId == signedInUserId) {
+    const editBtn = document.createElement("button");
+    editBtn.className = "btn btn-primary mr-1";
+    editBtn.innerText = "Edit";
+    editBtn.setAttribute("data-toggle", "modal");
+    editBtn.setAttribute("data-target", "#editMovieModal");
+    editBtn.setAttribute("data-list", movieInfo.listName);
+    editBtn.addEventListener(
+      "click",
+      onEdit.bind(this, movieInfo.movie.imdbID)
+    );
+    movieCard.lastElementChild.append(editBtn);
 
-		const deleteBtn = document.createElement("button");
-		deleteBtn.className = "btn btn-danger mr-1";
-		deleteBtn.innerText = "Delete";
-		deleteBtn.addEventListener("click", onDelete.bind(this, movieInfo.movie.imdbID));
-		movieCard.lastElementChild.append(deleteBtn);
-	}
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "btn btn-danger mr-1";
+    deleteBtn.innerText = "Delete";
+    deleteBtn.addEventListener(
+      "click",
+      onDelete.bind(this, movieInfo.movie.imdbID)
+    );
+    movieCard.lastElementChild.append(deleteBtn);
+  }
 
-	const infoBtn = document.createElement("button");
-	infoBtn.className = "btn btn-info";
-	infoBtn.innerText = "Info";
-	infoBtn.setAttribute("data-toggle", "modal");
-	infoBtn.setAttribute("data-target", "#movieInfoModal");
-	infoBtn.addEventListener("click", onInfo.bind(this, movieInfo.movie.imdbID));
-	movieCard.lastElementChild.append(infoBtn);
+  const infoBtn = document.createElement("button");
+  infoBtn.className = "btn btn-info";
+  infoBtn.innerText = "Info";
+  infoBtn.setAttribute("data-toggle", "modal");
+  infoBtn.setAttribute("data-target", "#movieInfoModal");
+  infoBtn.addEventListener("click", onInfo.bind(this, movieInfo.movie.imdbID));
+  movieCard.lastElementChild.append(infoBtn);
 
-	const dropDownIcon = document.createElement("i");
-	dropDownIcon.className = "fas fa-chevron-down dropdown-icon";
+  const dropDownIcon = document.createElement("i");
+  dropDownIcon.className = "fas fa-chevron-down dropdown-icon";
 
-	dropDownIcon.addEventListener("click", (event) => {
-		event.target.classList.toggle("rotate180");
-		const commentSection = document.getElementById(`${movieInfo.movie.imdbID}-1`);
-		// commentSection.classList.toggle('d-none');
-		commentSection.classList.toggle("dropdown--item-hide");
-		const buttons = document.getElementById(`${movieInfo.movie.imdbID}-2`);
-		// buttons.classList.toggle('d-none');
-		buttons.classList.toggle("dropdown--item-hide");
-	});
+  dropDownIcon.addEventListener("click", (event) => {
+    event.target.classList.toggle("rotate180");
+    const commentSection = document.getElementById(
+      `${movieInfo.movie.imdbID}-1`
+    );
+    // commentSection.classList.toggle('d-none');
+    commentSection.classList.toggle("dropdown--item-hide");
+    const buttons = document.getElementById(`${movieInfo.movie.imdbID}-2`);
+    // buttons.classList.toggle('d-none');
+    buttons.classList.toggle("dropdown--item-hide");
+  });
 
-	movieCard.children[2].appendChild(dropDownIcon);
+  movieCard.children[2].appendChild(dropDownIcon);
 
-	return movieCard;
+  return movieCard;
 };
 
 const createItemToWatchCard = (movieInfo) => {
-	const itemToWatchCard = document.createElement("div");
-	itemToWatchCard.className =
-		"card px-3 pt-3 my-2 row flex-row no-gutters justify-content-center";
-	itemToWatchCard.innerHTML = ` <div class="col-4 px-2">
+  const itemToWatchCard = document.createElement("div");
+  itemToWatchCard.className =
+    "card px-3 pt-3 my-2 row flex-row no-gutters justify-content-center";
+  itemToWatchCard.innerHTML = ` <div class="col-4 px-2">
 	<img src="${movieInfo.Poster}"
 		class="rounded mx-auto d-block" alt="..." style="width: 100%;">
 </div>
@@ -208,45 +216,47 @@ const createItemToWatchCard = (movieInfo) => {
 <div class="col-12 pt-3 pb-3 text-center dropdown--item dropdown--item-hide" id="${movieInfo.imdbID}-thingstowatch"> 
 </div>`;
 
-	const signedInUserId =
-		localStorage.getItem("PMDBuserid") || sessionStorage.getItem("PMDBuserid");
-	if (isSignedIn && userId == signedInUserId) {
-		const deleteBtn = document.createElement("button");
-		deleteBtn.className = "btn btn-danger mr-1";
-		deleteBtn.innerText = "Delete";
-		deleteBtn.addEventListener("click", onDelete.bind(this, movieInfo.imdbID));
-		itemToWatchCard.lastElementChild.append(deleteBtn);
-	}
+  const signedInUserId =
+    localStorage.getItem("PMDBuserid") || sessionStorage.getItem("PMDBuserid");
+  if (isSignedIn && userId == signedInUserId) {
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "btn btn-danger mr-1";
+    deleteBtn.innerText = "Delete";
+    deleteBtn.addEventListener("click", onDelete.bind(this, movieInfo.imdbID));
+    itemToWatchCard.lastElementChild.append(deleteBtn);
+  }
 
-	const infoBtn = document.createElement("button");
-	infoBtn.className = "btn btn-info";
-	infoBtn.innerText = "Info";
-	infoBtn.setAttribute("data-toggle", "modal");
-	infoBtn.setAttribute("data-target", "#movieInfoModal");
+  const infoBtn = document.createElement("button");
+  infoBtn.className = "btn btn-info";
+  infoBtn.innerText = "Info";
+  infoBtn.setAttribute("data-toggle", "modal");
+  infoBtn.setAttribute("data-target", "#movieInfoModal");
 
-	const dropDownIcon = document.createElement("i");
-	dropDownIcon.className = "fas fa-chevron-down dropdown-icon";
+  const dropDownIcon = document.createElement("i");
+  dropDownIcon.className = "fas fa-chevron-down dropdown-icon";
 
-	infoBtn.addEventListener("click", onInfo.bind(this, movieInfo.imdbID));
+  infoBtn.addEventListener("click", onInfo.bind(this, movieInfo.imdbID));
 
-	dropDownIcon.addEventListener("click", (event) => {
-		event.target.classList.toggle("rotate180");
+  dropDownIcon.addEventListener("click", (event) => {
+    event.target.classList.toggle("rotate180");
 
-		const buttons = document.getElementById(`${movieInfo.imdbID}-thingstowatch`);
-		// buttons.classList.toggle('d-none');
-		buttons.classList.toggle("dropdown--item-hide");
-	});
+    const buttons = document.getElementById(
+      `${movieInfo.imdbID}-thingstowatch`
+    );
+    // buttons.classList.toggle('d-none');
+    buttons.classList.toggle("dropdown--item-hide");
+  });
 
-	itemToWatchCard.lastElementChild.append(infoBtn);
-	itemToWatchCard.children[2].appendChild(dropDownIcon);
+  itemToWatchCard.lastElementChild.append(infoBtn);
+  itemToWatchCard.children[2].appendChild(dropDownIcon);
 
-	return itemToWatchCard;
+  return itemToWatchCard;
 };
 
 const createMovieInfoCard = (movieObj) => {
-	const movieInfoElement = document.createElement("div");
-	movieInfoElement.classList.add("row");
-	movieInfoElement.innerHTML = `<div class="col-12 mb-2">
+  const movieInfoElement = document.createElement("div");
+  movieInfoElement.classList.add("row");
+  movieInfoElement.innerHTML = `<div class="col-12 mb-2">
 	<div class="h4">${movieObj.Title} (${movieObj.Year})</div>
 </div>
 <div class="col-md-5 d-flex align-items-center justify-content-center pb-3"><img
@@ -272,206 +282,208 @@ const createMovieInfoCard = (movieObj) => {
 	</div>
 </div>`;
 
-	return movieInfoElement;
+  return movieInfoElement;
 };
 
 const createFriendItem = (friendInfo) => {
-	const container = document.createElement("div");
-	container.className = "d-inline-flex friend-item w-100 p-1";
-	container.style.cursor = "pointer";
-	container.innerHTML = ` <img src="https://avatars.dicebear.com/api/gridy/${friendInfo.firstname}${friendInfo.lastname}.svg"
+  const container = document.createElement("div");
+  container.className = "d-inline-flex friend-item w-100 p-1";
+  container.style.cursor = "pointer";
+  container.innerHTML = ` <img src="https://api.dicebear.com/7.x/bottts/svg?seed=${friendInfo.firstname}${friendInfo.lastname}"
 	style="border-radius: 35%; height: 2rem; width: 2rem;" alt="avatar">
 <div class="h6 my-auto ml-2">${friendInfo.firstname} ${friendInfo.lastname}</div>`;
 
-	container.addEventListener("click", () => {
-		location.replace(
-			`https://your--movie--database.herokuapp.com/profile/?username=${friendInfo.username}&id=${friendInfo.userid}&name=${friendInfo.firstname}&lname=${friendInfo.lastname}`
-		);
-	});
+  container.addEventListener("click", () => {
+    location.replace(
+      `http://localhost:3000/profile/?username=${friendInfo.username}&id=${friendInfo.userid}&name=${friendInfo.firstname}&lname=${friendInfo.lastname}`
+    );
+  });
 
-	return container;
+  return container;
 };
 
 const createUserSearchResultItem = (userInfo, isFriend = false) => {
-	const container = document.createElement("div");
-	container.className = "d-inline-flex userSearch-item w-100 shadow";
-	container.style.cursor = "pointer";
+  const container = document.createElement("div");
+  container.className = "d-inline-flex userSearch-item w-100 shadow";
+  container.style.cursor = "pointer";
 
-	const avatar = document.createElement("img");
-	avatar.src = `https://avatars.dicebear.com/api/gridy/${userInfo.firstname}${userInfo.lastname}.svg`;
-	avatar.alt = "avatar";
-	avatar.style.cssText = "border-radius: 35%; height: 2rem; width: 2rem;";
-	avatar.addEventListener("click", () => {
-		location.replace(
-			`https://your--movie--database.herokuapp.com/profile/?username=${userInfo.username}&id=${userInfo.userid}&name=${userInfo.firstname}&lname=${userInfo.lastname}`
-		);
-	});
-	container.append(avatar);
+  const avatar = document.createElement("img");
+  avatar.src = `https://api.dicebear.com/7.x/bottts/svg?seed=${userInfo.firstname}${userInfo.lastname}`;
+  avatar.alt = "avatar";
+  avatar.style.cssText = "border-radius: 35%; height: 2rem; width: 2rem;";
+  avatar.addEventListener("click", () => {
+    location.replace(
+      `http://localhost:3000/profile/?username=${userInfo.username}&id=${userInfo.userid}&name=${userInfo.firstname}&lname=${userInfo.lastname}`
+    );
+  });
+  container.append(avatar);
 
-	const name = document.createElement("div");
-	name.className = "h6 my-auto ml-2";
-	name.innerText = `${userInfo.firstname} ${userInfo.lastname}`;
-	name.addEventListener("click", () => {
-		location.replace(
-			`https://your--movie--database.herokuapp.com/profile/?username=${userInfo.username}&id=${userInfo.userid}&name=${userInfo.firstname}&lname=${userInfo.lastname}`
-		);
-	});
-	container.append(name);
+  const name = document.createElement("div");
+  name.className = "h6 my-auto ml-2";
+  name.innerText = `${userInfo.firstname} ${userInfo.lastname}`;
+  name.addEventListener("click", () => {
+    location.replace(
+      `http://localhost:3000/profile/?username=${userInfo.username}&id=${userInfo.userid}&name=${userInfo.firstname}&lname=${userInfo.lastname}`
+    );
+  });
+  container.append(name);
 
-	if (!isFriend && isSignedIn) {
-		const addContainer = document.createElement("div");
-		addContainer.className = "ml-auto my-auto mr-1";
-		const addtoFriendsBtn = document.createElement("button");
-		addtoFriendsBtn.type = "button";
-		addtoFriendsBtn.className = "btn btn-primary addToFriendsjs";
-		addtoFriendsBtn.style.cssText = "border-radius: 50%; padding: 0rem .46rem;";
-		addtoFriendsBtn.setAttribute("data-toggle", "tooltip");
-		addtoFriendsBtn.setAttribute("data-placement", "bottom");
-		addtoFriendsBtn.setAttribute("title", "Add to your friends");
-		addtoFriendsBtn.innerText = "+";
-		addtoFriendsBtn.addEventListener(
-			"click",
-			addToFriendsHandler.bind(this, userInfo)
-		);
-		addContainer.append(addtoFriendsBtn);
-		container.append(addContainer);
-	}
+  if (!isFriend && isSignedIn) {
+    const addContainer = document.createElement("div");
+    addContainer.className = "ml-auto my-auto mr-1";
+    const addtoFriendsBtn = document.createElement("button");
+    addtoFriendsBtn.type = "button";
+    addtoFriendsBtn.className = "btn btn-primary addToFriendsjs";
+    addtoFriendsBtn.style.cssText = "border-radius: 50%; padding: 0rem .46rem;";
+    addtoFriendsBtn.setAttribute("data-toggle", "tooltip");
+    addtoFriendsBtn.setAttribute("data-placement", "bottom");
+    addtoFriendsBtn.setAttribute("title", "Add to your friends");
+    addtoFriendsBtn.innerText = "+";
+    addtoFriendsBtn.addEventListener(
+      "click",
+      addToFriendsHandler.bind(this, userInfo)
+    );
+    addContainer.append(addtoFriendsBtn);
+    container.append(addContainer);
+  }
 
-	return container;
+  return container;
 };
 
 const updateMoviesList = (movieElement) => {
-	const watchedMoviesList = document.getElementById("moviesList");
-	watchedMoviesList.prepend(movieElement);
+  const watchedMoviesList = document.getElementById("moviesList");
+  watchedMoviesList.prepend(movieElement);
 };
 
 const updateSeriesList = (seriesElement) => {
-	const watchedMoviesList = document.getElementById("seriesList");
-	watchedMoviesList.prepend(seriesElement);
+  const watchedMoviesList = document.getElementById("seriesList");
+  watchedMoviesList.prepend(seriesElement);
 };
 
 const updateThingsToWatchList = (thingsToWatchElement) => {
-	const watchedMoviesList = document.getElementById("thingsToWatchList");
-	watchedMoviesList.prepend(thingsToWatchElement);
+  const watchedMoviesList = document.getElementById("thingsToWatchList");
+  watchedMoviesList.prepend(thingsToWatchElement);
 };
 
 const updateMovieInfoModal = (movieInfoElement) => {
-	const movieInfoContainer = document.getElementById("MoviesInfo");
-	movieInfoContainer.innerHTML = "";
-	movieInfoContainer.append(movieInfoElement);
+  const movieInfoContainer = document.getElementById("MoviesInfo");
+  movieInfoContainer.innerHTML = "";
+  movieInfoContainer.append(movieInfoElement);
 };
 
 const updateFriendsList = (friendEl) => {
-	const friendsList = document.getElementById("friendsList");
-	friendsList.prepend(friendEl);
+  const friendsList = document.getElementById("friendsList");
+  friendsList.prepend(friendEl);
 };
 
 const updateUserSearchResultsList = (searchResultEl) => {
-	const userSearchResultList = document.getElementById("userSearchResultContainer");
-	userSearchResultList.prepend(searchResultEl);
+  const userSearchResultList = document.getElementById(
+    "userSearchResultContainer"
+  );
+  userSearchResultList.prepend(searchResultEl);
 };
 
 //updating people you might know list
 const updatePeopleYMNlist = (userEl) => {
-	const PeopleYMNlist = document.getElementById("peopleYMNlist");
-	PeopleYMNlist.prepend(userEl);
+  const PeopleYMNlist = document.getElementById("peopleYMNlist");
+  PeopleYMNlist.prepend(userEl);
 };
 
 const renderMovieList = async (userId) => {
-	const response = await axios.get(
-		`https://your--movie--database.herokuapp.com/watchedMovies/?Id=${userId}`
-	);
-	// console.log(response);
-	noOfMoviesWatched = response.data.length;
-	const noOfMoviesWatchedEl = document.getElementById("noOfMoviesWatched");
-	noOfMoviesWatchedEl.innerHTML = `Movies Watched: ${noOfMoviesWatched}`;
-	if (response.data.length > 0) {
-		for (let i = 0; i < response.data.length; i++) {
-			const movieInfo = {
-				movie: {
-					Title: response.data[i].moviename,
-					Poster: response.data[i].poster,
-					Year: response.data[i].year,
-					imdbID: response.data[i].movieid,
-				},
-				userRating: response.data[i].rating,
-				userComment: response.data[i].comment,
-				userName: username,
-			};
-			updateMoviesList(createMovieCard(movieInfo));
-		}
-	} else {
-		const watchedMoviesContainer = document.getElementById("moviesList");
-		displayEmptyListMsg(watchedMoviesContainer);
-	}
+  const response = await axios.get(
+    `http://localhost:3000/watchedMovies/?Id=${userId}`
+  );
+  // console.log(response);
+  noOfMoviesWatched = response.data.length;
+  const noOfMoviesWatchedEl = document.getElementById("noOfMoviesWatched");
+  noOfMoviesWatchedEl.innerHTML = `Movies Watched: ${noOfMoviesWatched}`;
+  if (response.data.length > 0) {
+    for (let i = 0; i < response.data.length; i++) {
+      const movieInfo = {
+        movie: {
+          Title: response.data[i].moviename,
+          Poster: response.data[i].poster,
+          Year: response.data[i].year,
+          imdbID: response.data[i].movieid,
+        },
+        userRating: response.data[i].rating,
+        userComment: response.data[i].comment,
+        userName: username,
+      };
+      updateMoviesList(createMovieCard(movieInfo));
+    }
+  } else {
+    const watchedMoviesContainer = document.getElementById("moviesList");
+    displayEmptyListMsg(watchedMoviesContainer);
+  }
 };
 
 const renderthingsToWatchList = async (userId) => {
-	const response = await axios.get(
-		`https://your--movie--database.herokuapp.com/thingsToWatch/?Id=${userId}`
-	);
-	// console.log(response);
-	if (response.data.length > 0) {
-		for (let i = 0; i < response.data.length; i++) {
-			const movieInfo = {
-				Title: response.data[i].moviename,
-				Poster: response.data[i].poster,
-				Year: response.data[i].year,
-				imdbID: response.data[i].movieid,
-				imdbRating: response.data[i].imdbrating,
-			};
-			updateThingsToWatchList(createItemToWatchCard(movieInfo));
-		}
-	} else {
-		const thingsToWatchContainer = document.getElementById("thingsToWatchList");
-		displayEmptyListMsg(thingsToWatchContainer);
-	}
+  const response = await axios.get(
+    `http://localhost:3000/thingsToWatch/?Id=${userId}`
+  );
+  // console.log(response);
+  if (response.data.length > 0) {
+    for (let i = 0; i < response.data.length; i++) {
+      const movieInfo = {
+        Title: response.data[i].moviename,
+        Poster: response.data[i].poster,
+        Year: response.data[i].year,
+        imdbID: response.data[i].movieid,
+        imdbRating: response.data[i].imdbrating,
+      };
+      updateThingsToWatchList(createItemToWatchCard(movieInfo));
+    }
+  } else {
+    const thingsToWatchContainer = document.getElementById("thingsToWatchList");
+    displayEmptyListMsg(thingsToWatchContainer);
+  }
 };
 
 const renderSeriesList = async (userId) => {
-	const response = await axios.get(
-		`https://your--movie--database.herokuapp.com/watchedSeries/?Id=${userId}`
-	);
-	// console.log(response);
-	noOfSeriesWatched = response.data.length;
-	const noOfSeriesWatchedEl = document.getElementById("noOfSeriesWatched");
-	noOfSeriesWatchedEl.innerHTML = `Series Watched: ${noOfSeriesWatched}`;
+  const response = await axios.get(
+    `http://localhost:3000/watchedSeries/?Id=${userId}`
+  );
+  // console.log(response);
+  noOfSeriesWatched = response.data.length;
+  const noOfSeriesWatchedEl = document.getElementById("noOfSeriesWatched");
+  noOfSeriesWatchedEl.innerHTML = `Series Watched: ${noOfSeriesWatched}`;
 
-	if (response.data.length > 0) {
-		for (let i = 0; i < response.data.length; i++) {
-			const movieInfo = {
-				movie: {
-					Title: response.data[i].moviename,
-					Poster: response.data[i].poster,
-					Year: response.data[i].year,
-					imdbID: response.data[i].movieid,
-				},
-				userRating: response.data[i].rating,
-				userComment: response.data[i].comment,
-				userName: username,
-			};
-			updateSeriesList(createMovieCard(movieInfo));
-		}
-	} else {
-		const watchedSeriesContainer = document.getElementById("seriesList");
-		displayEmptyListMsg(watchedSeriesContainer);
-	}
+  if (response.data.length > 0) {
+    for (let i = 0; i < response.data.length; i++) {
+      const movieInfo = {
+        movie: {
+          Title: response.data[i].moviename,
+          Poster: response.data[i].poster,
+          Year: response.data[i].year,
+          imdbID: response.data[i].movieid,
+        },
+        userRating: response.data[i].rating,
+        userComment: response.data[i].comment,
+        userName: username,
+      };
+      updateSeriesList(createMovieCard(movieInfo));
+    }
+  } else {
+    const watchedSeriesContainer = document.getElementById("seriesList");
+    displayEmptyListMsg(watchedSeriesContainer);
+  }
 };
 
 const renderNavbarItems = (isUserSignedin) => {
-	const navbarContainer = document.getElementById("navbarContainer");
-	const navbarRightSideItems = document.createElement("div");
-	navbarRightSideItems.className =
-		"col pr-1 pl-0 d-flex align-items-center justify-content-end";
-	if (isUserSignedin) {
-		const name =
-			localStorage.getItem("PMDBfirstName") ||
-			sessionStorage.getItem("PMDBfirstName");
-		const lastName =
-			localStorage.getItem("PMDBlastName") ||
-			sessionStorage.getItem("PMDBlastName");
+  const navbarContainer = document.getElementById("navbarContainer");
+  const navbarRightSideItems = document.createElement("div");
+  navbarRightSideItems.className =
+    "col pr-1 pl-0 d-flex align-items-center justify-content-end";
+  if (isUserSignedin) {
+    const name =
+      localStorage.getItem("PMDBfirstName") ||
+      sessionStorage.getItem("PMDBfirstName");
+    const lastName =
+      localStorage.getItem("PMDBlastName") ||
+      sessionStorage.getItem("PMDBlastName");
 
-		navbarRightSideItems.innerHTML = `<div class="d-inline-flex mr-3 navbar-item " data-toggle="tooltip" data-placement="bottom"
+    navbarRightSideItems.innerHTML = `<div class="d-inline-flex mr-3 navbar-item " data-toggle="tooltip" data-placement="bottom"
 			title="Your profile" id="userProfileLink">
 			<div class="m-2" id="navbar-userinfo">${name} ${lastName}</div>
 			<i class="fas fa-user h3 my-auto"></i>
@@ -479,8 +491,8 @@ const renderNavbarItems = (isUserSignedin) => {
 		<div class="navbar-item" data-toggle="tooltip" data-placement="bottom" title="Logout" id="logoutBtn">
 			<i class="fas fa-sign-out-alt h3 my-auto"></i>
 		</div>`;
-	} else {
-		navbarRightSideItems.innerHTML = `<div class="d-inline-flex mr-1 navbar-item " id="userProfileLink">
+  } else {
+    navbarRightSideItems.innerHTML = `<div class="d-inline-flex mr-1 navbar-item " id="userProfileLink">
 		<div class="m-2" id="navbar-userinfo">
 			<button type="button" class="btn btn-outline-primary">Sign In</button>
 		</div>
@@ -488,235 +500,245 @@ const renderNavbarItems = (isUserSignedin) => {
 	<div class="navbar-item" data-toggle="tooltip" data-placement="bottom" title="Logout" id="logoutBtn">
 		<button type="button" class="btn btn-primary">Sign Up</button>
 	</div>`;
-	}
+  }
 
-	navbarContainer.append(navbarRightSideItems);
+  navbarContainer.append(navbarRightSideItems);
 };
 
 const renderSidemenuItems = (isUserSignedin) => {
-	const sidemenuItemsContainer = document.getElementById("sidemenuItems");
-	if (isUserSignedin) {
-		const yourProfile = document.createElement("div");
-		yourProfile.id = "yourProfile";
-		yourProfile.className = "side-menu-item mb-3";
-		yourProfile.innerText = "Your Profile";
-		yourProfile.addEventListener("click", loadProfilePage);
+  const sidemenuItemsContainer = document.getElementById("sidemenuItems");
+  if (isUserSignedin) {
+    const yourProfile = document.createElement("div");
+    yourProfile.id = "yourProfile";
+    yourProfile.className = "side-menu-item mb-3";
+    yourProfile.innerText = "Your Profile";
+    yourProfile.addEventListener("click", loadProfilePage);
 
-		const yourFriends = document.createElement("div");
-		yourFriends.className = "side-menu-item mb-3";
-		yourFriends.id = "yourFriends";
-		yourFriends.innerText = "Your friends";
-		yourFriends.addEventListener("click", getFriendsList);
+    const yourFriends = document.createElement("div");
+    yourFriends.className = "side-menu-item mb-3";
+    yourFriends.id = "yourFriends";
+    yourFriends.innerText = "Your friends";
+    yourFriends.addEventListener("click", getFriendsList);
 
-		const logout = document.createElement("div");
-		logout.id = "logoutSidemenu";
-		logout.className = "side-menu-item mb-3";
-		logout.addEventListener("click", onLogout);
-		logout.innerText = "Logout";
+    const logout = document.createElement("div");
+    logout.id = "logoutSidemenu";
+    logout.className = "side-menu-item mb-3";
+    logout.addEventListener("click", onLogout);
+    logout.innerText = "Logout";
 
-		sidemenuItemsContainer.prepend(yourProfile, yourFriends);
-		sidemenuItemsContainer.append(logout);
-	} else {
-		const yourProfile = document.createElement("div");
-		yourProfile.id = "yourProfile";
-		yourProfile.className = "side-menu-item mb-3";
-		yourProfile.innerText = "Your Profile";
-		yourProfile.addEventListener("click", () => {
-			location.replace(`https://your--movie--database.herokuapp.com/`);
-		});
+    sidemenuItemsContainer.prepend(yourProfile, yourFriends);
+    sidemenuItemsContainer.append(logout);
+  } else {
+    const yourProfile = document.createElement("div");
+    yourProfile.id = "yourProfile";
+    yourProfile.className = "side-menu-item mb-3";
+    yourProfile.innerText = "Your Profile";
+    yourProfile.addEventListener("click", () => {
+      location.replace(`http://localhost:3000/`);
+    });
 
-		const SignIn = document.createElement("div");
-		SignIn.className = "side-menu-item mb-3";
-		SignIn.id = "SignIn";
-		SignIn.innerText = "Sign in";
-		SignIn.addEventListener("click", () => {
-			location.replace(`https://your--movie--database.herokuapp.com/`);
-		});
+    const SignIn = document.createElement("div");
+    SignIn.className = "side-menu-item mb-3";
+    SignIn.id = "SignIn";
+    SignIn.innerText = "Sign in";
+    SignIn.addEventListener("click", () => {
+      location.replace(`http://localhost:3000/`);
+    });
 
-		const signUp = document.createElement("div");
-		signUp.id = "SignupSidemenu";
-		signUp.className = "side-menu-item mb-3";
-		signUp.innerText = "Sign up";
-		signUp.addEventListener("click", () => {
-			location.replace(`https://your--movie--database.herokuapp.com/register`);
-		});
+    const signUp = document.createElement("div");
+    signUp.id = "SignupSidemenu";
+    signUp.className = "side-menu-item mb-3";
+    signUp.innerText = "Sign up";
+    signUp.addEventListener("click", () => {
+      location.replace(`http://localhost:3000/register`);
+    });
 
-		sidemenuItemsContainer.prepend(yourProfile, SignIn, signUp);
-	}
+    sidemenuItemsContainer.prepend(yourProfile, SignIn, signUp);
+  }
 };
 
 const renderAddtoFriendsBtn = async () => {
-	if (!localStorage.getItem("PMDBfriendsList")) {
-		const response = await axios.get(
-			`https://your--movie--database.herokuapp.com/userFriends/?Id=${signedInUserId}`
-		);
-		const friendsList = response.data;
-		localStorage.setItem("PMDBfriendsList", JSON.stringify(friendsList));
-	}
+  if (!localStorage.getItem("PMDBfriendsList")) {
+    const response = await axios.get(
+      `http://localhost:3000/userFriends/?Id=${signedInUserId}`
+    );
+    const friendsList = response.data;
+    localStorage.setItem("PMDBfriendsList", JSON.stringify(friendsList));
+  }
 
-	const friendsArray = JSON.parse(localStorage.getItem("PMDBfriendsList"));
-	let isFriend = false;
-	friendsArray.forEach((friendInfo) => {
-		if (friendInfo.userid == userId) {
-			isFriend = true;
-			return;
-		}
-	});
+  const friendsArray = JSON.parse(localStorage.getItem("PMDBfriendsList"));
+  let isFriend = false;
+  friendsArray.forEach((friendInfo) => {
+    if (friendInfo.userid == userId) {
+      isFriend = true;
+      return;
+    }
+  });
 
-	if (!isFriend) {
-		const friendInfo = {
-			userid: userId,
-			username: username,
-			firstname: firstname,
-			lastname: lastname,
-		};
-		const profileInfoBox = document.getElementById("profileInfoBox");
-		const addtofriendsBtn = document.createElement("button");
-		addtofriendsBtn.type = "button";
-		addtofriendsBtn.className = "btn btn-primary btn-sm";
-		addtofriendsBtn.innerText = "Add to friends";
-		addtofriendsBtn.addEventListener(
-			"click",
-			addToFriendsHandler.bind(this, friendInfo)
-		);
+  if (!isFriend) {
+    const friendInfo = {
+      userid: userId,
+      username: username,
+      firstname: firstname,
+      lastname: lastname,
+    };
+    const profileInfoBox = document.getElementById("profileInfoBox");
+    const addtofriendsBtn = document.createElement("button");
+    addtofriendsBtn.type = "button";
+    addtofriendsBtn.className = "btn btn-primary btn-sm";
+    addtofriendsBtn.innerText = "Add to friends";
+    addtofriendsBtn.addEventListener(
+      "click",
+      addToFriendsHandler.bind(this, friendInfo)
+    );
 
-		const container = document.createElement("div");
-		container.classList = "d-flex flex-row justify-content-center pt-3";
-		container.append(addtofriendsBtn);
-		profileInfoBox.append(container);
-	}
+    const container = document.createElement("div");
+    container.classList = "d-flex flex-row justify-content-center pt-3";
+    container.append(addtofriendsBtn);
+    profileInfoBox.append(container);
+  }
 };
 
 const renderAddtoListBtns = () => {
-	const watchedMoviesHeader = document.getElementById("watchedMoviesHeader");
-	const watchedSeriesHeader = document.getElementById("watchedSeriesHeader");
-	const thingsToWatchHeader = document.getElementById("thingsToWatchHeader");
-	const AddBtn1 = document.createElement("button");
-	AddBtn1.type = "button";
-	AddBtn1.className = "btn btn-primary";
-	AddBtn1.setAttribute("data-toggle", "modal");
-	AddBtn1.setAttribute("data-target", "#exampleModal");
-	AddBtn1.innerText = "Add";
-	AddBtn1.setAttribute("data-list", "moviesList");
-	watchedMoviesHeader.append(AddBtn1);
+  const watchedMoviesHeader = document.getElementById("watchedMoviesHeader");
+  const watchedSeriesHeader = document.getElementById("watchedSeriesHeader");
+  const thingsToWatchHeader = document.getElementById("thingsToWatchHeader");
+  const AddBtn1 = document.createElement("button");
+  AddBtn1.type = "button";
+  AddBtn1.className = "btn btn-primary";
+  AddBtn1.setAttribute("data-toggle", "modal");
+  AddBtn1.setAttribute("data-target", "#exampleModal");
+  AddBtn1.innerText = "Add";
+  AddBtn1.setAttribute("data-list", "moviesList");
+  watchedMoviesHeader.append(AddBtn1);
 
-	const AddBtn2 = document.createElement("button");
-	AddBtn2.type = "button";
-	AddBtn2.className = "btn btn-primary";
-	AddBtn2.setAttribute("data-toggle", "modal");
-	AddBtn2.setAttribute("data-target", "#exampleModal");
-	AddBtn2.innerText = "Add";
-	AddBtn2.setAttribute("data-list", "seriesList");
-	watchedSeriesHeader.append(AddBtn2);
+  const AddBtn2 = document.createElement("button");
+  AddBtn2.type = "button";
+  AddBtn2.className = "btn btn-primary";
+  AddBtn2.setAttribute("data-toggle", "modal");
+  AddBtn2.setAttribute("data-target", "#exampleModal");
+  AddBtn2.innerText = "Add";
+  AddBtn2.setAttribute("data-list", "seriesList");
+  watchedSeriesHeader.append(AddBtn2);
 
-	const AddBtn3 = document.createElement("button");
-	AddBtn3.type = "button";
-	AddBtn3.className = "btn btn-primary";
-	AddBtn3.setAttribute("data-toggle", "modal");
-	AddBtn3.setAttribute("data-target", "#exampleModal");
-	AddBtn3.innerText = "Add";
-	AddBtn3.setAttribute("data-list", "thingsToWatchList");
-	thingsToWatchHeader.append(AddBtn3);
+  const AddBtn3 = document.createElement("button");
+  AddBtn3.type = "button";
+  AddBtn3.className = "btn btn-primary";
+  AddBtn3.setAttribute("data-toggle", "modal");
+  AddBtn3.setAttribute("data-target", "#exampleModal");
+  AddBtn3.innerText = "Add";
+  AddBtn3.setAttribute("data-list", "thingsToWatchList");
+  thingsToWatchHeader.append(AddBtn3);
 };
 
 const setListContainerSize = () => {
-	const listContainerParent = document.getElementById("listContainer");
-	const totalHeight = listContainerParent.offsetHeight;
-	const child1Height = listContainerParent.children[0].offsetHeight;
-	const child2Height = listContainerParent.children[1].offsetHeight;
-	const desiredHeight = totalHeight - (child1Height + child2Height);
+  const listContainerParent = document.getElementById("listContainer");
+  const totalHeight = listContainerParent.offsetHeight;
+  const child1Height = listContainerParent.children[0].offsetHeight;
+  const child2Height = listContainerParent.children[1].offsetHeight;
+  const desiredHeight = totalHeight - (child1Height + child2Height);
 
-	const listContainers = document.querySelectorAll(".movieList-container-size");
-	listContainers.forEach((container) => {
-		container.style.height = `${desiredHeight}px`;
-	});
+  const listContainers = document.querySelectorAll(".movieList-container-size");
+  listContainers.forEach((container) => {
+    container.style.height = `${desiredHeight}px`;
+  });
 };
 const sessionNum =
-	localStorage.getItem("PMDBsessionNum") || sessionStorage.getItem("PMDBsessionNum");
+  localStorage.getItem("PMDBsessionNum") ||
+  sessionStorage.getItem("PMDBsessionNum");
 const signedInUserId =
-	localStorage.getItem("PMDBuserid") || sessionStorage.getItem("PMDBuserid");
+  localStorage.getItem("PMDBuserid") || sessionStorage.getItem("PMDBuserid");
 let isSignedIn = false;
 
 if (sessionNum) {
-	// if (
-	// 	localStorage.getItem('PMDBuserid') == userId ||
-	// 	sessionStorage.getItem('PMDBuserid') == userId
-	// ) {
-	isSignedin(signedInUserId, sessionNum).then((res) => {
-		isSignedIn = res;
-		console.log("issignedin", res);
-		renderNavbarItems(isSignedIn);
-		renderSidemenuItems(isSignedIn);
-		const userProfileNavbar = document.getElementById("userProfileLink");
-		const logoutBtnNavbar = document.getElementById("logoutBtn");
-		if (isSignedIn) {
-			renderMovieList(userId);
-			renderSeriesList(userId);
-			renderthingsToWatchList(userId);
-			userProfileNavbar.addEventListener("click", loadProfilePage);
-			logoutBtn.addEventListener("click", onLogout);
+  // if (
+  // 	localStorage.getItem('PMDBuserid') == userId ||
+  // 	sessionStorage.getItem('PMDBuserid') == userId
+  // ) {
+  isSignedin(signedInUserId, sessionNum).then((res) => {
+    isSignedIn = res;
+    console.log("issignedin", res);
+    renderNavbarItems(isSignedIn);
+    renderSidemenuItems(isSignedIn);
+    const userProfileNavbar = document.getElementById("userProfileLink");
+    const logoutBtnNavbar = document.getElementById("logoutBtn");
+    if (isSignedIn) {
+      renderMovieList(userId);
+      renderSeriesList(userId);
+      renderthingsToWatchList(userId);
+      userProfileNavbar.addEventListener("click", loadProfilePage);
+      logoutBtn.addEventListener("click", onLogout);
 
-			if (
-				!(
-					localStorage.getItem("PMDBuserid") == userId ||
-					sessionStorage.getItem("PMDBuserid") == userId
-				)
-			) {
-				renderAddtoFriendsBtn();
-			} else {
-				renderAddtoListBtns();
-			}
-		} else {
-			userProfileNavbar.addEventListener("click", () => {
-				location.replace(`https://your--movie--database.herokuapp.com/`);
-			});
-			logoutBtnNavbar.addEventListener("click", () => {
-				location.replace(`https://your--movie--database.herokuapp.com/register`);
-			});
-		}
-	});
-	// }
+      if (
+        !(
+          localStorage.getItem("PMDBuserid") == userId ||
+          sessionStorage.getItem("PMDBuserid") == userId
+        )
+      ) {
+        renderAddtoFriendsBtn();
+      } else {
+        renderAddtoListBtns();
+      }
+    } else {
+      userProfileNavbar.addEventListener("click", () => {
+        location.replace(`http://localhost:3000/`);
+      });
+      logoutBtnNavbar.addEventListener("click", () => {
+        location.replace(`http://localhost:3000/register`);
+      });
+    }
+  });
+  // }
 } else {
-	renderMovieList(userId);
-	renderSeriesList(userId);
-	renderthingsToWatchList(userId);
-	renderNavbarItems(isSignedIn);
-	renderSidemenuItems(isSignedIn);
-	const userProfileNavbar = document.getElementById("userProfileLink");
-	const logoutBtnNavbar = document.getElementById("logoutBtn");
+  renderMovieList(userId);
+  renderSeriesList(userId);
+  renderthingsToWatchList(userId);
+  renderNavbarItems(isSignedIn);
+  renderSidemenuItems(isSignedIn);
+  const userProfileNavbar = document.getElementById("userProfileLink");
+  const logoutBtnNavbar = document.getElementById("logoutBtn");
 
-	userProfileNavbar.addEventListener("click", () => {
-		location.replace(`https://your--movie--database.herokuapp.com/`);
-	});
-	logoutBtnNavbar.addEventListener("click", () => {
-		location.replace(`https://your--movie--database.herokuapp.com/register`);
-	});
+  userProfileNavbar.addEventListener("click", () => {
+    location.replace(`http://localhost:3000/`);
+  });
+  logoutBtnNavbar.addEventListener("click", () => {
+    location.replace(`http://localhost:3000/register`);
+  });
 }
 
 const searchBox = document.getElementById("searchTerm");
 searchBox.addEventListener("input", debounce(onSearch, 500));
 
-const searchBoxWatchedMovies = document.getElementById("searchTermWatchedMovies");
+const searchBoxWatchedMovies = document.getElementById(
+  "searchTermWatchedMovies"
+);
 searchBoxWatchedMovies.addEventListener("input", onSearchLocal);
 
-const searchBoxWatchedSeries = document.getElementById("searchTermWatchedSeries");
+const searchBoxWatchedSeries = document.getElementById(
+  "searchTermWatchedSeries"
+);
 searchBoxWatchedSeries.addEventListener("input", onSearchLocal);
 
-const searchTermThingToWatch = document.getElementById("searchTermThingToWatch");
+const searchTermThingToWatch = document.getElementById(
+  "searchTermThingToWatch"
+);
 searchTermThingToWatch.addEventListener("input", onSearchLocal);
 
 const peopleYouMightKnowBtn = document.getElementById("peopleYMNbutton");
 peopleYouMightKnowBtn.addEventListener("click", getPeopleYouMighKnowList);
 
 const SearchTermOtherUsers = document.getElementById("searchTermOtherUsers");
-SearchTermOtherUsers.addEventListener("input", debounce(onSearchOtherUsers, 500));
+SearchTermOtherUsers.addEventListener(
+  "input",
+  debounce(onSearchOtherUsers, 500)
+);
 SearchTermOtherUsers.addEventListener("focus", () => {
-	if (event.target.value) {
-		const searchResultContainer = document.getElementById(
-			"userSearchResultContainer"
-		);
-		searchResultContainer.classList.add("userSearch-result-container-visible");
-	}
+  if (event.target.value) {
+    const searchResultContainer = document.getElementById(
+      "userSearchResultContainer"
+    );
+    searchResultContainer.classList.add("userSearch-result-container-visible");
+  }
 });
 
 //setListContainerSize();
