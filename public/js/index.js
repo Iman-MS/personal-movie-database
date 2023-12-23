@@ -24,7 +24,7 @@ if (sessionNum) {
           localStorage.getItem("PMDBlastName") ||
           sessionStorage.getItem("PMDBlastName");
         location.replace(
-          `http://localhost:3000/profile/?username=${signedInUsername}&id=${signedInUserId}&name=${signedInfirstname}&lname=${signedInlastname}`
+          `http://localhost:8080/profile/?username=${signedInUsername}&id=${signedInUserId}&name=${signedInfirstname}&lname=${signedInlastname}`
         );
       }
     })
