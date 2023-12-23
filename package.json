@@ -6,11 +6,12 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon App.js"
+    "start": "node App.js"
   },
   "author": "iman-modarres",
   "license": "ISC",
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.0",
     "nodemon": "^2.0.4"
   },
   "dependencies": {

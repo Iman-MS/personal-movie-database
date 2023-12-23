@@ -18,7 +18,7 @@ const onAdd = async (Movie) => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:3000/addmovieorseries",
+        "http://localhost:8080/addmovieorseries",
         movieInfo
       );
       console.log(response);
@@ -63,7 +63,7 @@ const onSearchOtherUsers = async (event) => {
   if (searchTerm) {
     if (!localStorage.getItem("PMDBfriendsList")) {
       const response = await axios.get(
-        `http://localhost:3000/userFriends/?Id=${signedInUserId || userId}`
+        `http://localhost:8080/userFriends/?Id=${signedInUserId || userId}`
       );
       const friendsList = response.data;
       localStorage.setItem("PMDBfriendsList", JSON.stringify(friendsList));
