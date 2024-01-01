@@ -105,7 +105,7 @@ const addMovieOrSeries = async (req, res) => {
 
   try {
     const resp = await axios.get(
-      `https://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
+      `http://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
     );
     if (resp.data.signedIn == "true") {
       db("movies")
@@ -139,6 +139,7 @@ const addMovieOrSeries = async (req, res) => {
                 imdbrating: movieOrSeriesInfo.imdbRating,
               };
 
+              console.log(movie);
               trx
                 .insert(movie)
                 .into("movies")
@@ -231,7 +232,7 @@ const removeWatchedMovieOrSeries = async (req, res) => {
   }
   try {
     const resp = await axios.get(
-      `https://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
+      `http://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
     );
     if (resp.data.signedIn == "true") {
       db.transaction((trx) => {
@@ -275,7 +276,7 @@ const editWatchedMovieOrSeries = async (req, res) => {
   }
   try {
     const resp = await axios.get(
-      `https://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
+      `http://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
     );
     if (resp.data.signedIn == "true") {
       db.transaction((trx) => {

@@ -75,7 +75,7 @@ const removeLoadingAnim = (containerEl) => {
 const isSignedin = async (userId, sessionNum = "0") => {
   try {
     const response = await axios.get(
-      `https://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
+      `http://personalmoviedatabase.fly.dev/isSignedin/?Id=${userId}&sesId=${sessionNum}`
     );
 
     if (response.data.signedIn == "true") {
